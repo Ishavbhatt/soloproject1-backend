@@ -17,7 +17,13 @@ var userSchema = new Schema({
   password: {
     type: String,
     required: true
-  }
+  },
+  marksId: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Mark"
+      }
+    ]
 });
 
 userSchema.pre("save", function(next) {

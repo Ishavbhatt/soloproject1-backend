@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const auth = require("../middleware/user.auth");
 const Admin = require("../models/Admin");
+const Mark = require("../models/Mark");
 const User = require("../models/User");
 
 router.use(auth.validateToken);
@@ -10,7 +11,7 @@ router.use(auth.validateToken);
 
 router.get("/", (req, res, next) => {
   let { username } = req.user;
-  User.findOne({ username }, "-password").exec((err, user) => {
+  User.findOne({ username }, "-password").populate("marksId").exec((err, user) => {
     if (err) return next(err);
     if (!user) {
       Admin.findOne({ adminusername }, "-adminpassword").exec((err, user) => {
@@ -34,11 +35,13 @@ router.post("/submit", (req, res) => {
       { $push: { marksId: createdMark.id } },
       { new: true },
       (err, updatedUser) => {
+        console.log(updatedUser)
         if (err) return res.json({ err });
-        return res.json(createdMark);
+        return res.json({ createdMark,updatedUser, success: true });
       }
     );
   });
 });
+
 
 module.exports = router;

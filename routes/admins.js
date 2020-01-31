@@ -35,6 +35,7 @@ router.post("/login", function(req, res, next) {
         console.log(token)
         res.json({
           token,
+         adminname: admin.adminname,
     success: true
 
         });
