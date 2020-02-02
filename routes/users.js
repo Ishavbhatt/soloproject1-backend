@@ -1,52 +1,20 @@
 var express = require("express");
 var router = express.Router();
 var User = require("../models/User");
-var jwt = require('jsonwebtoken');
+var userController = require("../controllers/userController");
+var jwt = require("jsonwebtoken");
 
-// Add A New User
-router.post("/", function(req, res, next) {
-  User.create(req.body, (err, user) => {
-    console.log(user);
-    if (err) return next(err);
-    res.json({ user });
-  });
-});
+// Sign Up
+router.post("/", userController.userSignUp);
+
+// User SignIN
+router.post("/login", userController.userSignIn);
 
 // List of all users
 router.get("/", (req, res, next) => {
   User.find({}, (err, users) => {
     if (err) return next(err);
     res.json({ users });
-  });
-});
-
-// Login
-router.post("/login", function(req, res, next) {
-  User.findOne({ email: req.body.email }, (err, user) => {
-    console.log(user,"this is user");
-    if (err) return res.json({err});
-    if (!user) return res.json("Enter Valid Email");
-    if (!user.verifyPassword(req.body.password)) {
-      res.json("InCorrect Password");
-    }
-     jwt.sign(
-      {
-        username: user.username,
-        userId: user._id,
-        email: user.email
-      },
-      "thisissecret",
-      (err, token) => {
-        if (err)
-          return res.json({ success: false, msg: "token not generated" });
-        console.log(token)
-        res.json({
-          token,
-          username: user.username,
-          email: user.email
-        });
-      }
-    );
   });
 });
 

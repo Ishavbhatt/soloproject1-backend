@@ -4,44 +4,14 @@ const auth = require("../middleware/user.auth");
 const Admin = require("../models/Admin");
 const Mark = require("../models/Mark");
 const User = require("../models/User");
+const userController = require("../controllers/userController");
 
 router.use(auth.validateToken);
 
-// get current logged user
+// Get Single Logged User
+router.get("/", userController.getSingleUser);
 
-router.get("/", (req, res, next) => {
-  let { username } = req.user;
-  User.findOne({ username }, "-password").populate("marksId").exec((err, user) => {
-    if (err) return next(err);
-    if (!user) {
-      Admin.findOne({ adminusername }, "-adminpassword").exec((err, user) => {
-        if (err) return next(err);
-        res.json({ success: true, user });
-      });
-    } else {
-      res.json({ success: true, user });
-    }
-  });
-});
-
-// post marks
-router.post("/submit", (req, res) => {
-  let { userId } = req.user;
-  req.body.userId = userId;
-  Mark.create(req.body, (err, createdMark) => {
-    if (err) return res.json({ err });
-    User.findOneAndUpdate(
-      { _id: createdMark.userId },
-      { $push: { marksId: createdMark.id } },
-      { new: true },
-      (err, updatedUser) => {
-        console.log(updatedUser)
-        if (err) return res.json({ err });
-        return res.json({ createdMark,updatedUser, success: true });
-      }
-    );
-  });
-});
-
+// Submit Marks
+router.post("/submit", userController.submitMarks);
 
 module.exports = router;
