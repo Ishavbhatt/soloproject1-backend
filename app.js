@@ -5,16 +5,10 @@ var mongoose = require("mongoose");
 var path = require("path");
 var MongoStore = require("connect-mongo");
 
-var indexRouter = require("./routes/index");
-var adminsRouter = require("./routes/admins");
-var adminRouter = require("./routes/admin");
-var quizzesRouter = require("./routes/quizzes");
-var usersRouter = require("./routes/users");
-var userRouter = require("./routes/user");
-
 var app = express();
 
-// connect mongo
+
+// Connect Mongo
 mongoose.connect(
   "mongodb://localhost/soloproject1-backend",
   {
@@ -25,6 +19,17 @@ mongoose.connect(
     err ? console.log(err) : console.log("Connected to DB");
   }
 );
+
+
+// Handling Routes
+var indexRouter = require("./routes/index");
+var adminRouter = require("./routes/admin");
+var adminsRouter = require("./routes/admins");
+var quizzesRouter = require("./routes/quizzes");
+var userRouter = require("./routes/user");
+var usersRouter = require("./routes/users");
+
+
 
 app.use(logger("dev"));
 app.use(express.json());
