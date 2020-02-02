@@ -1,8 +1,8 @@
 var express = require("express");
-var router = express.Router();
 var User = require("../models/User");
 var userController = require("../controllers/userController");
 var jwt = require("jsonwebtoken");
+var router = express.Router();
 
 // Sign Up
 router.post("/", userController.userSignUp);

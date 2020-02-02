@@ -1,4 +1,6 @@
 var Quiz = require("../models/Quiz");
+var Admin = require("../models/Admin");
+
 var jwt = require("jsonwebtoken");
 
 module.exports = {

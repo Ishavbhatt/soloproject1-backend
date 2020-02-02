@@ -10,4 +10,6 @@ router.post("/", adminController.adminSignup);
 // Admin Signin
 router.post("/login", adminController.adminSignin);
 
+
+
 module.exports = router;

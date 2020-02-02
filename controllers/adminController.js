@@ -1,4 +1,4 @@
-var Admin = require("../models/User");
+var Admin = require("../models/Admin");
 var jwt = require("jsonwebtoken");
 
 module.exports = {

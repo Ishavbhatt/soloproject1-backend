@@ -6,11 +6,13 @@ var path = require("path");
 var MongoStore = require("connect-mongo");
 
 var app = express();
-
+app.use(express.static("public"));
+app.set("view engine", "ejs");
 
 // Connect Mongo
+const atlasUrl ="mongodb+srv://Ishavbhatt:12345@cluster0-2hrd2.mongodb.net/test?retryWrites=true&w=majority"
 mongoose.connect(
-  "mongodb://localhost/soloproject1-backend",
+  atlasUrl,
   {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -22,12 +24,12 @@ mongoose.connect(
 
 
 // Handling Routes
-var indexRouter = require("./routes/index");
-var adminRouter = require("./routes/admin");
+// var indexRouter = require("./routes/index");
 var adminsRouter = require("./routes/admins");
+var adminRouter = require("./routes/admin");
 var quizzesRouter = require("./routes/quizzes");
-var userRouter = require("./routes/user");
 var usersRouter = require("./routes/users");
+var userRouter = require("./routes/user");
 
 
 
@@ -36,12 +38,17 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/", indexRouter);
-app.use("/api/v1/admin", adminRouter);
+// app.use("/", indexRouter);
 app.use("/api/v1/admins", adminsRouter);
-app.use("/api/v1/user", userRouter);
-app.use("/api/v1/users", usersRouter);
+app.use("/api/v1/admin", adminRouter);
 app.use("/api/v1/quizzes", quizzesRouter);
+app.use("/api/v1/users", usersRouter);
+app.use("/api/v1/user", userRouter);
+
+app.get("*", function(req, res, next) {
+  res.sendFile(path.resolve(__dirname, 'public/'+'index.html'))
+})
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

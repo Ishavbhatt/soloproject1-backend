@@ -21,7 +21,13 @@ var adminSchema = new Schema({
   isAdmin: {
     type: Boolean,
     default: true
-  }
+  },
+   questionsId: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Quiz"
+      }
+    ]
 });
 
 // hashing adminPassword
@@ -36,7 +42,6 @@ adminSchema.pre("save", function(next) {
 });
 
 adminSchema.methods.verifyPassword = function(adminpassword) {
-  console.log("this password")
   return bcrypt.compareSync(adminpassword, this.adminpassword);
 };
 

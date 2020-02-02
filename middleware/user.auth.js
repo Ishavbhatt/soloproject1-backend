@@ -9,8 +9,6 @@ exports.validateToken = (req, res, next) => {
           .status(400)
           .json({ success: false, msg: "Something Went Wrong" });
       req.user = payload;
-      var user = req.user;
-      console.log(user);
       next();
     });
   } else {

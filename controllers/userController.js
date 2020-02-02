@@ -13,32 +13,32 @@ module.exports = {
 
   // User SignIn
   userSignIn: (req, res) => {
-    User.findOne(
-      { email: req.body.email },
-      (err, user) => {
+  	let { password, email } = req.body;
+    
+    User.findOne({ email }, (err, user) => {
         if (err) return res.json({ err });
         if (!user) return res.json("Enter Valid Email");
-        if (!user.verifyPassword(req.body.password)) {
-          res.json("InCorrect Password");
+
+        if (!user.verifyPassword(password)) {
+          return res.json("InCorrect Password");
         }
 
         //   JWT sign
         jwt.sign({
-          username: user.uisername,
+          username: user.username,
           userId: user._id,
           email: user.email
-        });
-      },
-      "thisissecret",
-      (err, token) => {
-        res.json({
-          token,
-          success: true,
-          username: user.username,
-          userId: user._id
-        });
-      }
-    );
+        }, "thisissecret",
+      		(err, token) => {
+      			if (err)
+            return res.json({ success: false, msg: "Token Not Generted" });
+	res.json({
+	          token,
+	          success: true,
+	          user
+        	});
+      })
+    })
   },
 
   // Get Single User
@@ -69,4 +69,4 @@ module.exports = {
       );
     });
   }
-};
+}
