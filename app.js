@@ -45,10 +45,11 @@ app.use("/api/v1/quizzes", quizzesRouter);
 app.use("/api/v1/users", usersRouter);
 app.use("/api/v1/user", userRouter);
 
-app.get("*", function(req, res, next) {
-  res.sendFile(path.resolve(__dirname, 'public/'+'index.html'))
-})
+// view index.ejs
 
+app.get("*", function(req, res, next) {
+  res.render("index");
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
