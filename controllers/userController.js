@@ -43,7 +43,7 @@ module.exports = {
 
   // Get Single User
   getSingleUser: (req, res) => {
-    User.findById((req.user.userId, "-password"))
+    User.findById(req.user.userId, "-password")
       .populate("marksId")
       .exec((err, user) => {
         if (err) return res.json({ err });
