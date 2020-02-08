@@ -8,10 +8,11 @@ var MongoStore = require("connect-mongo");
 var app = express();
 app.use(express.static("public"));
 app.set("view engine", "ejs");
+const atlasUrl ="mongodb+srv://Ishavbhatt:12345@cluster0-2hrd2.mongodb.net/test?retryWrites=true&w=majority",
 
 // Connect Mongo
 mongoose.connect(
-const atlasUrl ="mongodb+srv://Ishavbhatt:12345@cluster0-2hrd2.mongodb.net/test?retryWrites=true&w=majority",
+  atlasUrl,
   {
     useNewUrlParser: true,
     useUnifiedTopology: true
