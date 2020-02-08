@@ -18,14 +18,10 @@ var adminSchema = new Schema({
     type: String,
     required: true
   },
-  isAdmin: {
-    type: Boolean,
-    default: true
-  },
-   questionsId: [
+  quizsetsId: [
       {
         type: Schema.Types.ObjectId,
-        ref: "Quiz"
+        ref: "Quizset"
       }
     ]
 });

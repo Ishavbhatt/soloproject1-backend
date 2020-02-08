@@ -7,15 +7,23 @@ const quizSchema = new Schema(
       type: String,
       required: true
     },
-    answers: {
-      type: [String],
-      required: true
-    },
-    correctanswer: {
+    option1: {
       type: String,
       required: true
     },
-    quizset: {
+    option2: {
+      type: String,
+      required: true
+    },
+    option3: {
+      type: String,
+      required: true
+    },
+    option4: {
+      type: String,
+      required: true
+    },
+    answer: {
       type: String,
       required: true
     },

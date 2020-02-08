@@ -9,9 +9,15 @@ const userController = require("../controllers/userController");
 router.use(auth.validateToken);
 
 // Get Single Logged User
-router.get("/", userController.getSingleUser);
+router.get("/", auth.validateToken, userController.getSingleUser);
+
+// get all quizsets
+router.get("/quizsets", auth.validateToken, userController.getQuizsets);
+
+// get single quizset
+router.get("/quizsets/:id", auth.validateToken, userController.getSingleQuizset);
 
 // Submit Marks
-router.post("/submit", userController.submitMarks);
+router.post("/quizsets/:id/submit", auth.validateToken, userController.submitMarks);
 
 module.exports = router;

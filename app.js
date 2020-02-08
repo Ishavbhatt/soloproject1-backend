@@ -10,9 +10,8 @@ app.use(express.static("public"));
 app.set("view engine", "ejs");
 
 // Connect Mongo
-const atlasUrl ="mongodb+srv://Ishavbhatt:12345@cluster0-2hrd2.mongodb.net/test?retryWrites=true&w=majority"
 mongoose.connect(
-  atlasUrl,
+const atlasUrl ="mongodb+srv://Ishavbhatt:12345@cluster0-2hrd2.mongodb.net/test?retryWrites=true&w=majority",
   {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -30,6 +29,8 @@ var adminRouter = require("./routes/admin");
 var quizzesRouter = require("./routes/quizzes");
 var usersRouter = require("./routes/users");
 var userRouter = require("./routes/user");
+var quizsetsRouter = require("./routes/quizsets");
+
 
 
 
@@ -44,6 +45,9 @@ app.use("/api/v1/admin", adminRouter);
 app.use("/api/v1/quizzes", quizzesRouter);
 app.use("/api/v1/users", usersRouter);
 app.use("/api/v1/user", userRouter);
+app.use("/api/v1/quizsets", quizsetsRouter);
+
+
 
 // view index.ejs
 

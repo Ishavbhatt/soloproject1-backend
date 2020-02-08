@@ -42,7 +42,7 @@ module.exports = {
   // GetSingleAdmin
   getSingleAdmin: (req, res) => {
     Admin.findById(req.admin.adminId, "-adminpassword")
-      .populate("questionsId")
+      .populate("quizsetsId")
       .exec((err, admin) => {
         if (err) return res.json({ err });
         res.json({ admin, success: true });

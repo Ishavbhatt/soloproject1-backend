@@ -8,19 +8,15 @@ const router = express.Router();
 // Get All The Questions
 router.get("/", quizController.getQuizzes);
 
-// protected routes
-router.use(adminauth.validateToken);
-
-// create question
-router.post("/", quizController.createQuiz);
-
 // edit question
-router.put("/:id", quizController.editQuiz);
+router.put("/:id", adminauth.validateToken, quizController.editQuiz);
 
 // delete question
-router.delete("/:id", quizController.deleteQuiz);
+router.delete("/:id", adminauth.validateToken, quizController.deleteQuiz);
 
 // Get Single Quiz
-router.get("/:id", quizController.getSingleQuiz);
+router.get("/:id", adminauth.validateToken, quizController.getSingleQuiz);
+
+
 
 module.exports = router;
