@@ -4,15 +4,14 @@ var logger = require("morgan");
 var mongoose = require("mongoose");
 var path = require("path");
 var MongoStore = require("connect-mongo");
+require("dotenv").config();
 
 var app = express();
-app.use(express.static("public"));
-app.set("view engine", "ejs");
-const atlasUrl ="mongodb+srv://Ishavbhatt:12345@cluster0-2hrd2.mongodb.net/test?retryWrites=true&w=majority",
+
 
 // Connect Mongo
 mongoose.connect(
-  atlasUrl,
+   process.env.atlasUrl,
   {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -21,6 +20,9 @@ mongoose.connect(
     err ? console.log(err) : console.log("Connected to DB");
   }
 );
+
+app.use(express.static("public"));
+app.set("view engine", "ejs");
 
 
 // Handling Routes
@@ -63,6 +65,9 @@ app.use(function(req, res, next) {
 
 // error handler
 app.use(function(err, req, res) {
+ res.locals.message = err.message;
+  res.locals.error = req.app.get("env") === "development" ? err : {};
+  
   res.status(err.status || 500);
   res.json({ success: false, err });
 });
